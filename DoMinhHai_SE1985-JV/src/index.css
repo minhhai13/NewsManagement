@@ -1,0 +1,15 @@
+:root {
+  --brand-navy: #172B4D;
+  --brand-red: #B42332;
+  --bs-primary: var(--brand-navy);
+  --bs-primary-rgb: 23, 43, 77;
+  --bs-body-color: var(--brand-navy);
+  --bs-body-bg: #F5F6F8;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #F5F6F8;
+  color: var(--brand-navy);
+}

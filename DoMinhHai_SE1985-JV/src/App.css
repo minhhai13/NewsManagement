@@ -1,0 +1,14 @@
+.nav-link-side {
+  color: var(--brand-navy);
+  border-radius: 6px;
+}
+.nav-link-side:hover {
+  background: #EDF0F4;
+}
+.nav-link-side.active {
+  background: var(--brand-navy);
+  color: #fff;
+}
+.article-content {
+  white-space: pre-wrap;
+}
