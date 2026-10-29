@@ -2,7 +2,6 @@ package com.minhhai.newsmanagement.controller;
 
 import com.minhhai.newsmanagement.dto.ArticleRequest;
 import com.minhhai.newsmanagement.dto.ArticleResponse;
-import com.minhhai.newsmanagement.dto.AuditLogResponse;
 import com.minhhai.newsmanagement.entity.UserAccount;
 import com.minhhai.newsmanagement.security.CurrentUser;
 import com.minhhai.newsmanagement.service.NewsService;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-/** API của Contributor (tác giả) và audit timeline. */
+/** API của Contributor (tác giả). */
 @RestController
 @RequestMapping("/api/v1/news")
 public class NewsController {
@@ -63,10 +62,5 @@ public class NewsController {
     public ArticleResponse resubmit(@PathVariable Long id) {
         UserAccount user = CurrentUser.get();
         return ArticleResponse.from(workflowService.resubmit(id, user));
-    }
-
-    @GetMapping("/{id}/audit-logs")
-    public List<AuditLogResponse> auditLogs(@PathVariable Long id) {
-        return newsService.auditLogs(id, CurrentUser.get());
     }
 }
