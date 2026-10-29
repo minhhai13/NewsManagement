@@ -88,7 +88,7 @@ export default function UserManage() {
                      <td><Badge bg={u.status === 1 ? "success" : "secondary"}>{u.status === 1 ? "Hoạt động" : "Đã khóa"}</Badge></td>
                      <td><div className="d-flex gap-2">
                         <Button size="sm" variant="outline-primary" onClick={() => openForm(u)}>Sửa</Button>
-                        <Button size="sm" variant="outline-danger" disabled={u.id === me.id} onClick={() => setDeleting(u)}>Xóa</Button>
+                        <Button size="sm" variant="outline-danger" disabled={u.id === me?.id} onClick={() => setDeleting(u)}>Xóa</Button>
                      </div></td>
                   </tr>
                ))}

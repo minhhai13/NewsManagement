@@ -8,3 +8,4 @@ import java.util.List;
 public interface WorkflowAuditLogRepository extends JpaRepository<WorkflowAuditLog, Long> {
     List<WorkflowAuditLog> findByArticleIdOrderByCreatedAtAscIdAsc(Long articleId);
 }
+
