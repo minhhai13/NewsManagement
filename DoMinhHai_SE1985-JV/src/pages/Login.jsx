@@ -1,25 +1,27 @@
 import { useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import { useAuth, HOME_BY_ROLE } from "../auth/AuthContext";
 
 export default function Login() {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
-   const [error, setError] = useState("");
+   const [dialog, setDialog] = useState({ show: false, message: "" });
    const [busy, setBusy] = useState(false);
    const { login } = useAuth();
    const navigate = useNavigate();
 
    const handleLogin = async (e) => {
       e.preventDefault();
-      setError("");
       setBusy(true);
       try {
          const user = await login(username, password);
          navigate(HOME_BY_ROLE[user.role], { replace: true });
       } catch (err) {
-         setError(err.message);
+         setDialog({
+            show: true,
+            message: err.message || "You are not allowed to access this function!",
+         });
       } finally {
          setBusy(false);
       }
@@ -30,7 +32,6 @@ export default function Login() {
          <Card style={{ width: 400 }} className="shadow p-3">
             <Card.Body>
                <h2 className="text-center fw-bold mb-4">FUNews Login</h2>
-               {error && <Alert variant="danger">{error}</Alert>}
                <Form onSubmit={handleLogin}>
                   <Form.Group className="mb-3">
                      <Form.Label>Username</Form.Label>
@@ -47,6 +48,20 @@ export default function Login() {
                </div>
             </Card.Body>
          </Card>
+
+         <Modal show={dialog.show} onHide={() => setDialog({ show: false, message: "" })} centered backdrop="static">
+            <Modal.Header closeButton>
+               <Modal.Title className="fw-bold fs-5 text-danger">Thông báo</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="py-4">
+               <p className="mb-0 fs-6 text-center">{dialog.message}</p>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+               <Button variant="secondary" onClick={() => setDialog({ show: false, message: "" })}>
+                  Đóng
+               </Button>
+            </Modal.Footer>
+         </Modal>
       </div>
    );
 }

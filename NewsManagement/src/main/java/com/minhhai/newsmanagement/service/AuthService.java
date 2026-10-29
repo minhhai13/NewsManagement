@@ -26,12 +26,12 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
         UserAccount user = userRepository.findByUsername(request.username())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Tài khoản hoặc mật khẩu không chính xác"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not allowed to access this function!"));
         if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Tài khoản hoặc mật khẩu không chính xác");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not allowed to access this function!");
         }
         if (!Integer.valueOf(1).equals(user.getStatus())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Tài khoản đã bị vô hiệu hóa");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this function!");
         }
         return new AuthResponse(jwtUtil.generateToken(user.getId(), user.getUsername(), user.getRole().name()),
                 "Bearer", UserResponse.from(user));
